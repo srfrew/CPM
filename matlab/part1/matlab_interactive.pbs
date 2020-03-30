@@ -1,0 +1,9 @@
+#!/bin/bash
+#PBS -l walltime=3:00:00,select=1:ncpus=32:mem=128gb
+#PBS -I
+#PBS -q interactive_cpu
+#PBS -N matlab_interactive
+#PBS -A st-tv01-1
+ 
+#################### PBS example script ###################
+ 

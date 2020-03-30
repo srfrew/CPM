@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#PBS -l walltime=2:00:00,select=1:ncpus=32:mem=128gb
+#PBS -N cohort1AB_rcpm-p01-OCD
+#PBS -m abe
+#PBS -M srfrew@uwaterloo.ca
+#PBS -A st-tv01-1
+#PBS -e cohort1AB_rcpm_errout1-p01-OCD.txt
+#PBS -o cohort1AB_rcpm_stdout1-p01-OCD.txt
+
+#################### PBS  script ###################
+
+cd $PBS_O_WORKDIR
+
+module load matlab 
+matlab -nodisplay -r "run /scratch/st-tv01-1/ocd/analysis/part1/cohort1AB_rcpm.m; quit;"

@@ -30,6 +30,7 @@ classdef predictory < handle
         output;
         mse;
         control;
+        masks; % added by Simon, record of each mask used for prediction
     end
     methods
         function this = predictory(group,options)

@@ -1,0 +1,1 @@
+% simon frew, srfrew, VanderLab March 2020% % convert 2-dimensional cell array to 2-dimensional rCPM arrayfunction rcpm_array = cell2rcpm(cell_array)    rcpm_array = rcpm.empty();    for i = 1:size(cell_array, 1)    	rcpm_array(i, :) = [cell_array{i, :}];    endend

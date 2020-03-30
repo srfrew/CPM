@@ -1,7 +1,9 @@
 classdef rcpm < predictory
     methods
         function this = rcpm(group,options)
+        %function this = rcpm(varargin)
             this = this@predictory(group,options);
+            %this = this@predictory(varargin);
         end
         function run(this)
             
@@ -30,15 +32,18 @@ classdef rcpm < predictory
                 
                 edges_1 = find(edge_p < this.thresh);
                 
+                options = statset('UseParallel', true); %then in lasso, include ‘Options’, options)
+
+
                 % build model on TRAIN subs
-                if ~exist('lambda', 'var')  || length(this.lambda) ~= 1
-                    [fit_coef, fit_info] = lasso(train.x(edges_1, :)', train.y, 'Alpha',this.v_alpha, 'CV', 10);
+                if ~exist('lambda', 'var')  && length(this.lambda) ~= 1
+                    [fit_coef, fit_info] = lasso(train.x(edges_1, :)', train.y, 'Alpha',this.v_alpha, 'CV', 10, 'Options', options);
                     idxLambda1SE = fit_info.Index1SE;
                     coef = fit_coef(:,idxLambda1SE);
                     coef0 = fit_info.Intercept(idxLambda1SE);
                     this.lambda_total(i_fold) = fit_info.Lambda(idxLambda1SE);
                 else
-                    [coef, fit_info] = lasso(train.x(edges_1, :)', train.y, 'Alpha',this.alpha, 'Lambda', this.lambda);
+                    [coef, fit_info] = lasso(train.x(edges_1, :)', train.y, 'Alpha',this.v_alpha, 'Lambda', this.lambda);
                     coef0 = fit_info.Intercept;
                 end
                 
@@ -53,14 +58,14 @@ classdef rcpm < predictory
         
         function evaluate(this)
             % compare predicted and observed behaviors
-            [r_pearson, ~] = corr(this.Y, this.phenotype.all_behav);
-            [r_rank, ~] = corr(this.Y, this.phenotype.all_behav, 'type', 'spearman');
-            mse = sum((this.Y - this.phenotype.all_behav).^2) / this.group.group_size;
-            q_s = 1 - mse / var(this.phenotype.all_behav, 1);
-            fprintf('mse=%f\n',mse);
-            fprintf('r_pearson=%f\n',r_pearson);
-            fprintf('r_rank=%f\n',r_rank);
-            fprintf('q_s=%f\n',q_s);
+            [this.r_pearson, ~] = corr(this.Y, this.phenotype.all_behav);
+            [this.r_rank, ~] = corr(this.Y, this.phenotype.all_behav, 'type', 'spearman');
+            this.mse = sum((this.Y - this.phenotype.all_behav).^2) / this.group.group_size;
+            this.q_s = 1 - this.mse / var(this.phenotype.all_behav, 1);
+            fprintf('mse=%f\n',this.mse);
+            fprintf('r_pearson=%f\n',this.r_pearson);
+            fprintf('r_rank=%f\n',this.r_rank);
+            fprintf('q_s=%f\n',this.q_s);
         end
     end
 end

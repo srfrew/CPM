@@ -19,7 +19,7 @@ classdef subject < handle
                 this.dataset = dataset;
                 this.num_node = size(x, 1);
                 this.num_task = size(x, 4);
-                is_sym = issymmetric(x(:, :, 1, 1));
+                is_sym = 1;%issymmetric(x(:, :, 1, 1)); % force symmetry
                 if is_sym
                     this.num_edge = this.num_node * (this.num_node - 1) / 2;
                 else
@@ -36,7 +36,7 @@ classdef subject < handle
                     end
                 end
            
-                this.issym = issymmetric(x(:, :, 1, 1));
+                this.issym = 1;%issymmetric(x(:, :, 1, 1)); % force symmetry
                 if(mask=="abi")
                     missing_nodes = [60, 100, 108, 109, 112, 115,116, 118, 129, 189, ...
                         202, 239, 240, 242, 243, 249, 250, 266];
