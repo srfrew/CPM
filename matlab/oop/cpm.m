@@ -42,7 +42,7 @@ classdef cpm < predictory
             [this.r_pearson, ~] = corr(this.Y, this.phenotype.all_behav);
             [this.r_rank, ~] = corr(this.Y, this.phenotype.all_behav, 'type', 'spearman');
             this.mse = sum((this.Y - this.phenotype.all_behav).^2) / this.num_sub_total;
-            this.q_s = 1 - this.mse / var(this.all_behav, 1);
+            this.q_s = 1 - this.mse / var(this.phenotype.all_behav, 1);
             fprintf('mse=%f\n',this.mse);
             fprintf('r_pearson=%f\n',this.r_pearson);
             fprintf('r_rank=%f\n',this.r_rank);
