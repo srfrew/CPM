@@ -8,7 +8,7 @@
 %  subject: a class of 9 task-based connectome and single label
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [results] = run_rcpm(x, y, thresh, dataset)
+function [results] = run_rcpm(x, y, thresh, dataset, k)
     % generate group
     g = buildGroup(x,dataset,'none'); % mask=false, Bins
 
@@ -16,7 +16,7 @@ function [results] = run_rcpm(x, y, thresh, dataset)
     options = [];
     options.thresh=thresh;  % 0.01;
     options.seed = randi([1 10000]);
-    options.k = length(y); % 24, 48
+    options.k = k; % 24, 48
     options.phenotype = phenotype('behav',y);
     %options.diagnosis = randi(2,175,1);
 
