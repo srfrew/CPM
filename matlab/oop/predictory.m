@@ -31,6 +31,7 @@ classdef predictory < handle
         mse;
         control;
         masks; % added by Simon, record of each mask used for prediction
+        p_pearson % added by Simon, records pearson p values
     end
     methods
         function this = predictory(group,options)
