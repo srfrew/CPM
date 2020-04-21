@@ -58,7 +58,7 @@ classdef rcpm < predictory
         
         function evaluate(this)
             % compare predicted and observed behaviors
-            [this.r_pearson, ~] = corr(this.Y, this.phenotype.all_behav);
+            [this.r_pearson, this.p_pearson] = corr(this.Y, this.phenotype.all_behav);
             [this.r_rank, ~] = corr(this.Y, this.phenotype.all_behav, 'type', 'spearman');
             this.mse = sum((this.Y - this.phenotype.all_behav).^2) / this.num_sub_total;
             this.q_s = 1 - this.mse / var(this.phenotype.all_behav, 1);
